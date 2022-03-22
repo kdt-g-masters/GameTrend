@@ -30,5 +30,5 @@
 	</bean>
 
 	<!-- 4. 개발자 구현 클래스 annotation scan 태그 설정 -->
-	<context:component-scan base-package="com.gmasters.gametrend" />
+	<context:component-scan base-package="com.gmasters.gametrend.*" />
 </beans>

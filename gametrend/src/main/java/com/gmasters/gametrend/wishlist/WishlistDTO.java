@@ -1,27 +1,31 @@
 package com.gmasters.gametrend.wishlist;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class WishlistDTO {
-	int no;
-	String user_id;
-	int game_no;
+	int wishlistNo;
+	String userId;
+	int gameNo;
 	
-	public int getNo() {
-		return no;
+	public int getWishlistNo() {
+		return wishlistNo;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setWishlistNo(int wishlistNo) {
+		this.wishlistNo = wishlistNo;
 	}
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public int getGame_no() {
-		return game_no;
+	public int getGameNo() {
+		return gameNo;
 	}
-	public void setGame_no(int game_no) {
-		this.game_no = game_no;
-	}	
+	public void setGameNo(int gameNo) {
+		this.gameNo = gameNo;
+	}
+	
 	
 }

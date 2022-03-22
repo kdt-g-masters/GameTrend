@@ -18,4 +18,24 @@ public class WishlistServiceImpl implements WishlistService {
 		return dao.selectPagingWishlist(limit);
 	}
 
+	@Override
+	public List<WishlistGameDTO> joinWishlistGame(String userId, int[] limit) {
+		return dao.joinWishlistGame(userId, limit);
+		/*
+		 * try { System.out.println("여기 왔다감");
+		 * 
+		 * } catch (Exception e) { System.out.println("여기 왔다감2"); }
+		 * System.out.println("여기 왔다감3"); return null;
+		 */
+	}
+
+	@Override
+	public List<WishlistDTO> selectAll() {
+		return dao.selectAll();
+	}
+	
+	
+	
+	
+
 }

@@ -10,5 +10,6 @@
 		<typeAlias type="com.gmasters.gametrend.review.ReviewDTO" alias="reviewdto"/>
 		<typeAlias type="com.gmasters.gametrend.user.UserDTO" alias="userdto"/>
 		<typeAlias type="com.gmasters.gametrend.wishlist.WishlistDTO" alias="wishlistdto"/>
+		<typeAlias type="com.gmasters.gametrend.wishlist.WishlistGameDTO" alias="wishlistgamedto"/>
 	</typeAliases>
 </configuration>
