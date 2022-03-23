@@ -16,7 +16,12 @@ public class WishlistController {
 	@Qualifier("wishlistService")
 	WishlistService service;
 	
-	@RequestMapping("/wishlist")
+	@RequestMapping("/wishlisttest")
+	public String wishlisttest() {
+		return "wishlist";
+	}
+	
+	//@RequestMapping("/wishlist")
 	public ModelAndView wishlist() {
 		ModelAndView mv = new ModelAndView();
 		List<WishlistDTO> list = service.selectAll();
@@ -38,9 +43,9 @@ public class WishlistController {
 	}
 	
 	// ajax
-	// @RequestMapping(value="/wishlist/joinwishlistgame", produces={"application/json; charset=utf-8"})
-	// @ResponseBody
-	public List<WishlistGameDTO> myWishlist(String userId, int page) throws Exception {
+	@RequestMapping(value="/wishlist/paging", produces={"application/json; charset=utf-8"})
+	@ResponseBody
+	public List<WishlistGameDTO> myWishlist(String userId, int page) {
 		int[] limit = new int[2];
 		limit[0] = (page - 1) * 6;
 		limit[1] = 6;
@@ -48,8 +53,8 @@ public class WishlistController {
 		return list;
 	}
 	
-	@RequestMapping("/wishlist/joinwishlistgame")
-	public ModelAndView myWishlist2(String userId, int page) throws Exception {
+	@RequestMapping("/wishlist")
+	public ModelAndView myWishlist2(String userId, int page) {
 		int[] limit = new int[2];
 		limit[0] = (page - 1) * 6;
 		limit[1] = 6;
@@ -57,7 +62,7 @@ public class WishlistController {
 		List<WishlistGameDTO> list = service.joinWishlistGame(userId, limit);
 		System.out.println(list);
 		mv.addObject("wishlist", list);
-		mv.setViewName("test");
+		mv.setViewName("wishlist");
 		return mv;
 	}
 }

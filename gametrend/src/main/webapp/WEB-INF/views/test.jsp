@@ -6,15 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="resources/jquery-3.6.0.min.js"></script>
+<script src="/gametrend/resources/jquery-3.6.0.min.js"></script>
 <script>
 	$(document).ready(function() {
-		
+		alert("실험");
 	});
 </script>
 </head>
 <body>
 	<h1>${ list }</h1>
-	<h1>${ wishlist }</h1>
+	
+	<c:forEach items="${ wishlist }" var="dto">
+		<h1>${ dto.wishlistDTO.userId }</h1>
+	</c:forEach>
 </body>
 </html>
