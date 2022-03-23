@@ -22,5 +22,10 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
+
+	@Override
+	public int joinInsertUser(UserDTO dto) {
+		return dao.joinInsertUser(dto);
+	}
 	
 }

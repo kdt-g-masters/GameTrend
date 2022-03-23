@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
@@ -18,6 +19,17 @@ public class UserController {
 	public String joinForm() {
 		return "join";
 	}
+	
+	@RequestMapping("/join/insertuser")
+	public ModelAndView joinInsertUser(UserDTO dto) {
+		int row = service.joinInsertUser(dto);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("result", row);
+		mv.setViewName("joinResult");
+		return mv;
+	}
+	
 	
 	// 회원가입 아이디 중복확인 ajax
 	@RequestMapping(value="/join/checkid", method=RequestMethod.POST, produces={"application/json; charset=utf-8"})

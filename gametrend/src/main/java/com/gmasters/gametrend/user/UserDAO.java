@@ -15,4 +15,9 @@ public class UserDAO {
 		System.out.println("dao Å¬·¡½º " + session.selectOne("checkId", id));
 		return session.selectOne("checkId", id);
 	}
+	
+	public int joinInsertUser(UserDTO dto) {
+		int row = session.insert("joinInsertUser", dto);
+		return row;
+	}
 }

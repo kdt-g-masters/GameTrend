@@ -104,3 +104,26 @@ button:hover{
 	background-color: white;
 	box-shadow: 5px 5px 20px;
 }
+.box2 {
+	width: 500px;
+	height: 500px;
+	padding: 50px;
+	margin: 100px auto;
+	border-radius: 10px;
+	background-color: white;
+	box-shadow: 5px 5px 20px;
+}
+#resultPageLogo {
+	margin: 50px auto;
+	width: 30%;
+	display: block;
+}
+.resultBox h2, a {
+		text-align: center;
+		margin: 50px auto;
+}
+.resultBox a {
+	margin: 10px auto;
+	width: 300px;
+	display: block;
+}

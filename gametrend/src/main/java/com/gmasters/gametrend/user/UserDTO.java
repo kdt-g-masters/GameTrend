@@ -7,7 +7,7 @@ public class UserDTO {
 	String name;
 	String birthdate;
 	int gender;
-	int phone;
+	String phone;
 	String image;
 	
 	public String getId() {
@@ -40,10 +40,10 @@ public class UserDTO {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getImage() {
