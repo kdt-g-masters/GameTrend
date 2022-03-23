@@ -14,8 +14,8 @@
 		$(document).ready(function() {
 			$("#pagingBtn2").on('click', function() {
 				$.ajax({
-					url: '/gametrend/wishlist/paging',
-					data: {'userId': 'id2', 'page': '1'},
+					url: '<%= request.getContextPath() %>/wishlist/paging',
+					data: {'userId': 'ccc', 'page': '1'},
 					type: 'get',
 					dataType: 'json',
 					success: function(data) {
