@@ -7,11 +7,93 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>회원가입 페이지</title>
+	<script src="/gametrend/resources/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var joinAvailable = false;
+			$("#checkIdBtn").on('click', function() {
+				$.ajax({
+					url: '<%= request.getContextPath() %>/join/checkid',
+					data: {'id': $("#userInputId").val()},
+					type: 'post',
+					dataType: 'json',
+					success: function(r) {
+						$('#resultModal').html(r.result);
+						if (r.state == "available") {
+							$("#idAvailable").css("display", "inline");
+							$("#idNotAvailable").css("display", "none");
+							joinAvailable = true;
+						}
+						else {
+							$("#idAvailable").css("display", "none");
+							$("#idNotAvailable").css("display", "inline");
+							joinAvailable = false;
+						}
+						
+					} // success end
+				}); // ajax end
+			}); // on end
+			
+			$("#password_1").focusout(function() {
+				if ($("#password_1").val() == $("#password").val()) {
+					$("#pwAvailable").css("display", "inline");
+					$("#pwNotAvailable").css("display", "none");
+					$("#pwCheck").html("");
+					joinAvailable = true;
+				}
+				else {
+					$("#pwAvailable").css("display", "none");
+					$("#pwNotAvailable").css("display", "inline");
+					$("#pwCheck").html("비밀번호가 일치하지 않습니다.");
+					joinAvailable = false;
+				}
+			});
+			$("#password").focusout(function() {
+				if ($("#password_1").val() == $("#password").val()) {
+					$("#pwAvailable").css("display", "inline");
+					$("#pwNotAvailable").css("display", "none");
+					$("#pwCheck").html("");
+					joinAvailable = true;
+				}
+				else {
+					$("#pwAvailable").css("display", "none");
+					$("#pwNotAvailable").css("display", "inline");
+					$("#pwCheck").html("비밀번호가 일치하지 않습니다.");
+					joinAvailable = false;
+				}
+			});
+			$("form").on('submit', pass);
+			function pass(e) {
+				if (joinAvailable == false) {
+					alert("아이디 또는 비밀번호 조건을 확인해주세요.");
+					e.preventDefault();
+				}
+				if($("#password").val().length < 5 || $("#password").val().length > 10){
+					alert("패스워드 형식을 다시 확인해주세요.");
+					e.preventDefault();
+				}
+				if(!$("#name").val().match(/[A-Z가-힣]+/)) {
+					alert("이름 형식을 다시 확인해주세요.");
+					e.preventDefault();
+				}
+
+				if(!$("#phone").val().match(/^010[0-9]{3,4}[0-9]{4}$/)) {
+					alert("전화번호 형식을 확인해주세요.");
+					e.preventDefault();
+				}				
+			}
+			$("#submitBtn").on('click', function() {
+				var temp = $("#year option:selected").val() + $("#month option:selected").val() + $("#day option:selected").val();
+				$("#tempBirthdate").val(temp);
+				
+			}); // on end
+		}); // ready end
+	</script>
 	<!-- BootStrap 적용  -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<!-- CSS 적용 --> 
-	<link href="resources/css/Join.css" rel="stylesheet" />
-	<link href="resources/css/index.css" rel="stylesheet"/>
+	<link href="/gametrend/resources/css/Join.css" rel="stylesheet" />
+	<link href="/gametrend/resources/css/index.css" rel="stylesheet"/>
 	<!-- 글꼴 적용 -->   
 	<link href="https://webfontworld.github.io/kopus/KoPubWorldDotum.css" rel="stylesheet">
 	<style>
@@ -29,18 +111,26 @@
     </section>
     
     <section>
-      <form name="login" action="index.html" method="post"><br>
+      <form action="join/insertuser" method="post"><br>
         <!-- 아이디  -->
         <div class="row">
           <h5 class="col-md-4 inline"> 아 이 디</h5>
           <p class="sm_msg">최대 20자까지 입력 가능합니다.</p>
-          <div class="col-md-8">
-            <input type="text" name="user_ID" placeholder="아이디 입력" maxlength="20" size="31" pattern="[a-zA-Z0-9]{0, 20}" required /> &nbsp;
+          <div class="col-md-12">
+            <input type="text" id="userInputId" name="id" placeholder="아이디 입력" maxlength="20" size="31" pattern="[a-zA-Z0-9]{0, 20}" required /> &nbsp;
             <!-- 중복확인(모달)  -->
             <!-- Button trigger modal -->
-            <button type="button" class="btn text-white btn-sm" style="background-color: #7244FE;" data-bs-toggle="modal" data-bs-target="#OverlappingCheck1">
+            <button type="button" id="checkIdBtn" class="btn text-white btn-sm" style="background-color: #7244FE;" data-bs-toggle="modal" data-bs-target="#OverlappingCheck1">
               중복확인
-            </button> 		
+            </button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" id="idAvailable">
+			  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+			  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+			</svg>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16" id="idNotAvailable">
+			  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+			  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+			</svg>
             <!-- Modal -->
             <div class="modal fade" id="OverlappingCheck1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -49,10 +139,7 @@
                     <h5 class="modal-title" id="staticBackdropLabel">ID 중복확인</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body">
-                    사용 가능! <br>
-                    사용 불가능 ㅜ <br>
-                  </div>
+                  <div class="modal-body" id="resultModal"></div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫 &nbsp;기</button>
                   </div>
@@ -65,20 +152,30 @@
         <div class="row">
           <h5 class="col-md-9 inline">비밀번호/확인</h5>
           <p class="sm_msg">영문/숫자/특수문자를 조합하여 기재하세요.</p> 
-          <div class="col-md-9">
-            <input type="password" name="user_PW1" value="123456" size="21" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{0,100}$" required />&nbsp;&nbsp;
+          <div class="col-md-12">
+            <input type="password" id="password_1" name="password_1" value="123456" size="21" required />&nbsp;&nbsp;
              <!-- 비밀번호 확인 -->
-             <input type="password" name="user_PW2" value="123456" size="21" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{0,100}$" required />
+             <input type="password" id="password" name="password" value="123456" size="21" required />
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" id="pwAvailable">
+			  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+			  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+			</svg>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16" id="pwNotAvailable">
+			  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+			  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+			</svg>
+			<div id="pwCheck"></div>
           </div>
         </div><br>
         <!-- 이름 --> 
         <div class="row">
           <h5 class="col-md-9 inline"> 이 &nbsp;&nbsp;&nbsp;름</h5>
           <div class="col-md-9">
-            <input type="text" name="user_name" value="" size="45">
+            <input type="text" id="name" name="name" value="" size="45">
           </div>
         </div><br>
         <!-- 생년월일 -->  
+        <input type="text" id="tempBirthdate" name="birthdate" style="display: none">
         <div class="row">
           <h5 class="col-md-9 inline"> 생년월일</h5>
           <div class="col-md-9">
@@ -136,32 +233,32 @@
               <option value="2019">2019</option>
               <option value="2020">2020</option>
             </select> <span class="date">년</span> &nbsp;
-            <select name="month">
+            <select name="month" id="month">
               <option value=""> 선택 </option>
-              <option value="1"> 1</option>
-              <option value="2"> 2</option>
-              <option value="3"> 3</option>
-              <option value="4"> 4</option>
-              <option value="5"> 5</option>
-              <option value="6"> 6</option>
-              <option value="7"> 7</option>
-              <option value="8"> 8</option>
-              <option value="9"> 9</option>
+              <option value="01">1</option>
+              <option value="02">2</option>
+              <option value="03">3</option>
+              <option value="04">4</option>
+              <option value="05">5</option>
+              <option value="06">6</option>
+              <option value="07">7</option>
+              <option value="08">8</option>
+              <option value="09">9</option>
               <option value="10">10</option>
               <option value="11">11</option>
               <option value="12">12</option>
             </select> <span class="date">월</span> &nbsp;
-            <select name="day">
+            <select name="day" id="day">
               <option value=""> 선택 </option>
-              <option value="1"> 1</option>
-              <option value="2"> 2</option>
-              <option value="3"> 3</option>
-              <option value="4"> 4</option>
-              <option value="5"> 5</option>
-              <option value="6"> 6</option>
-              <option value="7"> 7</option>
-              <option value="8"> 8</option>
-              <option value="9"> 9</option>
+              <option value="01"> 1</option>
+              <option value="02"> 2</option>
+              <option value="03"> 3</option>
+              <option value="04"> 4</option>
+              <option value="05"> 5</option>
+              <option value="06"> 6</option>
+              <option value="07"> 7</option>
+              <option value="08"> 8</option>
+              <option value="09"> 9</option>
               <option value="10">10</option>
               <option value="11">11</option>
               <option value="12">12</option>
@@ -193,10 +290,10 @@
 
           <div class="col-md-9">&nbsp;
             <div class="btn-group gender " role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check mainColor" name="gender" id="male" value="g1" autocomplete="off" checked>
+              <input type="radio" class="btn-check mainColor" name="gender" id="male" value="0" autocomplete="off" checked>
               <label class="btn btn-outline-primary" for="male">남 &nbsp;&nbsp;성</label>
 
-              <input type="radio" class="btn-check mainColor" name="gender" id="female" value="g2" autocomplete="off">
+              <input type="radio" class="btn-check mainColor" name="gender" id="female" value="1" autocomplete="off">
               <label class="btn btn-outline-primary" for="female">여 &nbsp;&nbsp;성</label>
             </div>
           </div>
@@ -215,7 +312,7 @@
               <option value="4">알뜰폰</option>
             </select>
             <!-- 연락처 텍스트칸 -->
-            <input type="text" name="user_phone" placeholder="010-****-****" pattern="^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$" required /> &nbsp;
+            <input type="text" id="phone" name="phone" placeholder="숫자만 입력" pattern="^[0-9]{2,3}[0-9]{3,4}[0-9]{4}$" required /> &nbsp;
             <!-- 인증번호(모달) -->   
             <!-- Button trigger modal -->
             <button type="button" class="btn text-white btn-sm" style="background-color: #7244FE;" data-bs-toggle="modal" data-bs-target="#CertificationNumber">
@@ -269,7 +366,7 @@
         <!-- 가입하기 --> 
         <div class="row flex center"> 
           <div class="col-md-12">
-            <button type="submit" class="btn text-white btn-sm" style="background-color: #7244FE; width:120px;">가입하기</button>&nbsp;&nbsp;&nbsp;
+            <button type="submit" id="submitBtn" class="btn text-white btn-sm" style="background-color: #7244FE; width:120px;">가입하기</button>&nbsp;&nbsp;&nbsp;
             <!-- 취소 --> 
             <button type="button" class="btn text-white btn-sm" style="background-color: #7244FE; width:120px;" onclick="window.close();">취 &nbsp;&nbsp;&nbsp;소</button>
             <br><br> 
