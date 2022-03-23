@@ -2,8 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gmasters.gametrend.wishlist" >
+<mapper namespace="com.gmasters.gametrend.*" >
+	<resultMap type="com.gmasters.gametrend.wishlist.WishlistDTO" id="wishlistMap">
+		<id property="wishlistNo" column="wishlistNo" />
+		<id property="userId" column="userId" />
+		<id property="gameNo" column="gameNo" />
+	</resultMap>
+	
+	<resultMap type="com.gmasters.gametrend.game.GameDTO" id="gameMap">
+		<id property="gameNo" column="gameNo" />
+		<id property="name" column="name" />
+		<id property="explanation" column="explanation" />
+		<id property="genre1" column="genre1" />
+		<id property="genre2" column="genre2" />
+		<id property="genre3" column="genre3" />
+		<id property="platform" column="platform" />
+		<id property="thumbnail" column="thumbnail" />
+		<id property="views" column="views" />
+		<id property="rating" column="rating" />
+		<id property="releaseDate" column="releaseDate" />
+		<id property="trailer" column="trailer" />
+		<id property="screenshot1" column="screenshot1" />
+		<id property="screenshot2" column="screenshot2" />
+		<id property="screenshot3" column="screenshot3" />
+		<id property="screenshot4" column="screenshot4" />
+	</resultMap>
+	
+	<resultMap type="com.gmasters.gametrend.wishlist.WishlistGameDTO" id="WishlistGameMap">
+		<collection property="wishlistDTO" resultMap="wishlistMap" />
+		<collection property="gameDTO" resultMap="gameMap" />
+	</resultMap>
+	
  	<select id="selectAllWishlist" resultType="wishlistdto">
 		select * from wishlist
+	</select>
+	
+	<select id="joinWishlistGame" resultMap="WishlistGameMap" resultType="wishlistgamedto">
+		select * from wishlist a, game b
+		where a.gameNo = b.gameNo and a.userId=#{id}
+		limit
+		<foreach collection="limit" item="li" separator=",">
+			#{li}
+		</foreach>
 	</select>
 </mapper>
