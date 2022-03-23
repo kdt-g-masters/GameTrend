@@ -2,8 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gmasters.gametrend.game" >
- 	<select id="selectAllGame" resultType="gamedto">
-		select * from game
+<mapper namespace="com.gmasters.gametrend.game.gameDAO" >
+	<select id="paginglist" resultType="gamedto">
+		select @rownum := @rownum+1 as no, gameNo, name, genre1, rating, thumbnail 
+		from game where (@rownum:=0)=0 and platform='pc' order by rating desc limit
+		<foreach collection="array" item="num" separator=",">
+			#{num}
+		</foreach>
 	</select>
+	
+<!-- <select id="gamebyplatform" resultType="gamedto" parameterType="String, int[]">
+		select * from game where platform=#{platform} order by rating desc limit
+	</select>
+ 	<select id="getallcount" resultType="int">
+	   	select count(*) as count from game
+	</select>
+	
+	<select id="" resultType="int">
+		select count(*) as count from game where platform=#{platform}
+	</select> -->
 </mapper>
