@@ -7,6 +7,22 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>회원가입 페이지</title>
+	<script src="resources/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#checkIdBtn").on('click', function() {
+				$.ajax({
+					url: '<%= request.getContextPath() %>/join/checkid',
+					data: {'id': $("#userInputId").val()},
+					type: 'post',
+					dataType: 'json',
+					success: function(r) {
+						$('#resultModal').html(r.result);
+					}
+				}); // ajax end
+			}); // on end
+		}); // ready end
+	</script>
 	<!-- BootStrap 적용  -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<!-- CSS 적용 --> 
@@ -35,12 +51,13 @@
           <h5 class="col-md-4 inline"> 아 이 디</h5>
           <p class="sm_msg">최대 20자까지 입력 가능합니다.</p>
           <div class="col-md-8">
-            <input type="text" name="user_ID" placeholder="아이디 입력" maxlength="20" size="31" pattern="[a-zA-Z0-9]{0, 20}" required /> &nbsp;
+            <input type="text" id="userInputId" name="user_ID" placeholder="아이디 입력" maxlength="20" size="31" pattern="[a-zA-Z0-9]{0, 20}" required /> &nbsp;
             <!-- 중복확인(모달)  -->
             <!-- Button trigger modal -->
-            <button type="button" class="btn text-white btn-sm" style="background-color: #7244FE;" data-bs-toggle="modal" data-bs-target="#OverlappingCheck1">
+            <button type="button" id="checkIdBtn" class="btn text-white btn-sm" style="background-color: #7244FE;" data-bs-toggle="modal" data-bs-target="#OverlappingCheck1">
               중복확인
-            </button> 		
+            </button>
+            <div id="checkIdResult"></div>	
             <!-- Modal -->
             <div class="modal fade" id="OverlappingCheck1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -49,10 +66,7 @@
                     <h5 class="modal-title" id="staticBackdropLabel">ID 중복확인</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body">
-                    사용 가능! <br>
-                    사용 불가능 ㅜ <br>
-                  </div>
+                  <div class="modal-body" id="resultModal"></div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫 &nbsp;기</button>
                   </div>
