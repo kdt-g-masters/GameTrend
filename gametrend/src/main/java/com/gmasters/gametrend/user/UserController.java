@@ -37,10 +37,10 @@ public class UserController {
 	public String checkId(String id) {
 		boolean result = service.checkId(id);
 		if (result == true) {
-			return "{\"result\": \"사용 가능한 아이디입니다.\"}";
+			return "{\"result\": \"사용 가능한 아이디입니다.\", \"state\": \"available\"}";
 		}
 		else {			
-			return "{\"result\": \"이미 존재하는 아이디 입니다. 다시 입력해주세요.\"}";
+			return "{\"result\": \"이미 존재하는 아이디 입니다. 다시 입력해주세요.\", \"state\": \"notAvailable\"}";
 		}
 	}
 }

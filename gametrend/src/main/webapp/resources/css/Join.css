@@ -127,3 +127,13 @@ button:hover{
 	width: 300px;
 	display: block;
 }
+#idAvailable, #pwAvailable {
+	display: none;
+	color: green;
+	margin: 5px;
+}
+#idNotAvailable, #pwNotAvailable {
+	display: none;
+	color: red;
+	margin: 5px;
+}
