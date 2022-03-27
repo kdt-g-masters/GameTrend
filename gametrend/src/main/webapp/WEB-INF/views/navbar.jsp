@@ -24,7 +24,14 @@
 	            document.body.classList.toggle('sb-sidenav-toggled');
 	            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
 	        });
-	    }
+	    }    	    
+	}
+    $('#logoutBtn').on('click', function() {
+    	<%
+			// session.removeAttribute("sessionid");
+    		//response.sendRedirect("/gametrend");
+		%>
+    });	
 	</script>
 	<style>
 		nav {
@@ -44,7 +51,7 @@
 	<nav class="navbar navbar-light bg-light fixed-top">
 	  <div class="container-fluid">
 		  <div class="d-flex justify-content-start">			
-		    <a class="navbar-brand " href="index.jsp">
+		    <a class="navbar-brand " href="<%=request.getContextPath() %>">
 		    	<img src="resources/images/logo_sm.png" width="10%">	    	
 		    	<b>Game Trend</b>
 		    </a>	  	
@@ -57,8 +64,20 @@
 				</svg>	        	
 	        </button>        
 	      </form>
+	      <c:if test="${ !empty sessionid }">
+	      	${ sessionid }님 안녕하세요 :)
+	      	<form class="d-flex justify-content-end">
+		    <a href="" class="btn btn-primary me-2 mainColor" type="button" id="logoutBtn">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+				  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+				  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+				</svg>	    	
+		    	로그아웃
+		    </a>
+	      </c:if>
+	      <c:if test="${ empty sessionid }">
 		  <form class="d-flex justify-content-end">
-		    <a href="login.jsp" class="btn btn-primary me-2 mainColor" type="button" id="loginBtn">
+		    <a href="login" class="btn btn-primary me-2 mainColor" type="button" id="loginBtn">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16" style="display: inline">
 				  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
 				  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
@@ -71,6 +90,7 @@
 				</svg>		    
 		    	회원가입
 		    </a>
+		    </c:if>
 	  		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 		      <span class="navbar-toggler-icon"></span>
 		    </button>		    		   		 

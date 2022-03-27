@@ -10,16 +10,63 @@ public class GameDTO {
 	String genre1;
 	String genre2;
 	String genre3;
-	String platform;
+	String platform = null;
 	String thumbnail;
-	int views;
-	double rating;
+	int views = 0;
+	double rating = 0;
 	String releaseDate;
 	String trailer;
 	String screenshot1;
 	String screenshot2;
 	String screenshot3;
-	String screenshot4;
+	String screenshot4 = null;
+	int no;
+	
+	public GameDTO() {}
+	public GameDTO(int no, int gameNo, String name, String explanation, String genre1, String genre2, String genre3,
+			String platform, String thumbnail, int views, double rating, String releaseDate, String trailer,
+			String screenshot1, String screenshot2, String screenshot3, String screenshot4) {
+		super();
+		this.no = no;
+		this.gameNo = gameNo;
+		this.name = name;
+		this.explanation = explanation;	
+		this.genre1 = genre1;
+		this.genre2 = genre2;
+		this.genre3 = genre3;
+		this.platform = platform;
+		this.thumbnail = thumbnail;
+		this.views = views;
+		this.rating = rating;
+		this.releaseDate = releaseDate;
+		this.trailer = trailer;
+		this.screenshot1 = screenshot1;
+		this.screenshot2 = screenshot2;
+		this.screenshot3 = screenshot3;
+		this.screenshot4 = screenshot4;
+	}
+	public GameDTO(int gameNo, String name, String explanation, String genre1, String genre2, String genre3,
+			String platform, String thumbnail, int views, double rating, String releaseDate, String trailer,
+			String screenshot1, String screenshot2, String screenshot3, String screenshot4) {
+		super();
+		this.gameNo = gameNo;
+		this.name = name;
+		this.explanation = explanation;	
+		this.genre1 = genre1;
+		this.genre2 = genre2;
+		this.genre3 = genre3;
+		this.platform = platform;
+		this.thumbnail = thumbnail;
+		this.views = views;
+		this.rating = rating;
+		this.releaseDate = releaseDate;
+		this.trailer = trailer;
+		this.screenshot1 = screenshot1;
+		this.screenshot2 = screenshot2;
+		this.screenshot3 = screenshot3;
+		this.screenshot4 = screenshot4;
+	}	
+	
 	public int getGameNo() {
 		return gameNo;
 	}

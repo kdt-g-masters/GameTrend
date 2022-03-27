@@ -62,9 +62,7 @@ public class WishlistController {
 		limit[0] = (page - 1) * 6;
 		limit[1] = 6;
 		ModelAndView mv = new ModelAndView();
-		// 세션 아이디 가져오기
 		HttpSession session = request.getSession();
-		session.setAttribute("sessionid", "ccc");
 		String temp = (String) session.getAttribute("sessionid");
 		List<WishlistGameDTO> list = service.joinWishlistGame(temp, limit);
 		System.out.println(list);

@@ -2,8 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gmasters.gametrend.review" >
- 	<select id="selectAllReview" resultType="reviewdto">
+<mapper namespace="com.gmasters.gametrend.review.ReviewDAO" >
+	<select id="selectAllReview" resultType="reviewdto">
 		select * from review
 	</select>
+	
+	<select id="selectCountReview" resultType="int">
+		select count(*) from review
+	</select>
+	
+	<select id="selectStarsgameNo" resultType="reviewdto" parameterType="int">
+		select stars from review where gameNo=#{gameNo}
+	</select>
+	
+	<select id="countReviewgameNo" resultType="int" parameterType="int">
+		select count(*) from review where gameNo=#{gameNo}
+	</select>
+	
+	<select id="selectReviewgameNo" resultType="reviewdto" parameterType="int">
+		select * from review where gameNo=#{gameNo}
+	</select>
+	
+	<insert id="insertReview" parameterType="reviewdto">
+		insert into review values(#{reviewNo}, #{userId}, #{gameNo}, #{contents}, #{stars}, #{createAt}, #{image})
+	</insert>
+	
+	<update id="updateReview" parameterType="reviewdto">
+		update review 
+		set contents=#{contents}, stars=#{stars}, createAt=#{createAt}
+		where reviewNo=#{reviewNo}
+	</update>
+	
+	<delete id="deleteReview" parameterType="String">
+		delete from review where userId=#{userId}
+	</delete>
+	
 </mapper>

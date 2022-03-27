@@ -1,3 +1,6 @@
+<%@page import="java.util.Random"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,12 +14,57 @@
 <link href="resources/css/sub.css" rel="stylesheet">
 <script src="resources/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function(){	
-	$('#reviewadd').on('click', function() {
-		var text = $('#memo').val();
-		$('#review1').append("<div><p>\"" + text + "\"</p></div>");
-		$('#memo').val('');
-	});//reviewadd end
+$(document).ready(function(){
+	$("#reviewinsert").on('click', function () {
+		$.ajax({
+			url: '<%=request.getContextPath() %>/insertReview' ,
+			data: {'reviewNo':$("#reviewNo").val(), 'userId':$("#reviewuserId").val(), 'gameNo':$("#reviewgameNo").val(), 'contents':$("#contents").val(), 'stars':$("#stars").val(), 'createAt':$("#createAt").val() } ,
+			type: 'POST' ,
+			dataType: 'json',
+			success: function (a) {
+				alert(JSON.stringify(a));
+				$.ajax({
+					url: '<%=request.getContextPath() %>/countreviewgameno',
+					data: {'gameNo':1} ,
+					dataType: 'json',
+					success: function(countreview){
+						$("#reviewcount").html("<h3>리뷰수=" + countreview + "</h3>");
+					}
+				});
+				
+				$.ajax({
+					url: '<%=request.getContextPath() %>/reviewgameno',
+					data: {'gameNo':1} ,
+					dataType: 'json',
+					success: function (list) {
+						var j = (list.length - 1);
+						$('#review1').append("<div style=\"background-color: black;\"><p>" + list[0].userId + "<br>" +list[0].createAt + "</p><p>" + list[0].contents + "</p></div>");
+					}
+				});
+				
+			}//success end
+		});//ajax end
+	});//on end
+	
+	$.ajax({
+		url: '<%=request.getContextPath() %>/countreviewgameno',
+		data: {'gameNo':1} ,
+		dataType: 'json',
+		success: function(countreview){
+			$("#reviewcount").html("<h3>리뷰수=" + countreview + "</h3>");
+		}
+	});//ajax end
+	
+	$.ajax({
+		url: '<%=request.getContextPath() %>/reviewgameno',
+		data: {'gameNo':1} ,
+		dataType: 'json',
+		success: function (list) {
+			for(var i = 0; i < list.length; i++){
+				$('#review1').append("<div style=\"background-color: black;\"><p>" + list[i].userId + "<br>" +list[i].createAt + "</p><p>" + list[i].contents + "</p></div>");
+			}
+		}
+	});
 	
 	var cnt = 0;
 	$('#star').on('click', function () {
@@ -85,7 +133,7 @@ $(document).ready(function(){
 		<div class="hidden" id="tema">
 			<div class="left" id="tema1">
 				<h1>리그 오브 레전드 <br> (League of Legends)</h1>
-				<img id="img1" src="images/lol/lol1.jpg">
+				<img id="img1" src="/gametrend/resources/images/thumbnail/1.jpg">
 				<p>PC</p>
 				<p>2011년 12월 4일</p>
 				<p>MOBA, AOS</p>
@@ -106,9 +154,7 @@ $(document).ready(function(){
 					</h2>
 				</div>
 				
-				<div style="float: right;">
-					<h2>조회수: 0</h2>
-				</div>
+				<div id="reviewcount" style="float: right;"></div>
 			</div>
 			
 			<div class="right" id="explain">
@@ -125,10 +171,10 @@ $(document).ready(function(){
 			<div style="float: left; margin-bottom: 0px; margin-right: 8px;">
 				<iframe width="390" height="315" src="https://www.youtube.com/embed/mDYqT0_9VR4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
-			<img class="img2" src="images/lol/lol2.png">
-			<img class="img2" src="images/lol/lol3.jpg">
-			<img class="img2" src="images/lol/lol4.jpg">
-			<img class="img2" src="images/lol/lol5.jpg">
+			<img class="img2" src="/gametrend/resources/images/screenshot/1_1.jpg">
+			<img class="img2" src="/gametrend/resources/images/screenshot/1_2.jpg">
+			<img class="img2" src="/gametrend/resources/images/screenshot/1_3.jpg">
+			<img class="img2" src="/gametrend/resources/images/screenshot/1_4.jpg">
 		</div>
 		
 		<h3>리뷰</h3>
@@ -139,20 +185,27 @@ $(document).ready(function(){
 			
 			<div class="right">
 				<h4>리뷰 쓰기</h4>
-				<textarea id="memo" rows="10" cols="70" style="width: 80%;"></textarea>
-				<br>
-				<input id="reviewadd" type="button" value="리뷰 입력" style="background-color: #7244FE; color: #FFFFFF">
+				<form action="">
+					<input id="reviewNo" type="text" value="<% Random random = new Random(); %><%= random.nextInt(9999)+1 %>" hidden>
+					아이디:<input id="reviewuserId" type="text">
+					<input id="reviewgameNo" type="text" value="1" hidden>
+					별점:<input id="stars" type="text">
+					<input id="createAt" type="text" value="<%Date now = new Date(); SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); %><%=formatter.format(now) %>" hidden>
+					<textarea id="contents" rows="10" cols="70" style="width: 80%;"></textarea>
+					<br>
+					<input id="reviewinsert" type="button" value="리뷰 입력" style="background-color: #7244FE; color: #FFFFFF">
+				</form>
 			</div>
 		</div>
 		
 		<h3>게임 추천</h3>
 		<div class="hidden1">
 			<table>
-				<tr><td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="images/gta1.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
-					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="images/gta1.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
-					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="images/gta1.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
-					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="images/gta1.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
-					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="images/gta1.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td></tr>
+				<tr><td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="/gametrend/resources/images/thumbnail/10.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
+					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="/gametrend/resources/images/thumbnail/10.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
+					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="/gametrend/resources/images/thumbnail/10.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
+					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="/gametrend/resources/images/thumbnail/10.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td>
+					<td><div class="recommendation" style="background-color: #B9A1FF;"><a><img class="img3" src="/gametrend/resources/images/thumbnail/10.jpg"><p>그랜드 테프트 오토 V</p><p>PS3</p><p>2013년 9월 17일</p></a></div></td></tr>
 			</table>
 		</div>
 	</main>

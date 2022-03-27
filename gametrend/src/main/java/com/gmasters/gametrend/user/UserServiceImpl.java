@@ -8,8 +8,24 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
+	private
 	@Qualifier("userDAO")
 	UserDAO dao;
+	
+	@Override
+	public UserDTO loginUser(UserDTO dto) {
+		return dao.loginUser(dto);
+	}
+	
+	/*@Override
+	public UserDTO findId(UserDTO dto) {
+		return dao.findId(dto);
+	}*/
+
+	/*@Override
+	public UserDTO findPassword(UserDTO dto) {
+		return dao.findPassword(dto);
+	}*/
 	
 	@Override
 	public boolean checkId(String id) {

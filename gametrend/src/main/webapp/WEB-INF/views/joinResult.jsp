@@ -26,7 +26,7 @@
 			<c:if test="${ result == 1 }">
 				<h2>회원 가입을 완료했습니다.</h2>
 				<a class = "btn btn-primary" href="login">로그인 페이지로 이동</a>
-				<a class = "btn btn-outline-primary" href="#">메인 화면으로 이동</a>
+				<a class = "btn btn-outline-primary" href="/gametrend/index">메인 화면으로 이동</a>
 			</c:if>
 			<c:if test="${ result == 0 }">
 				<h3>회원가입 실패</h3>

@@ -12,23 +12,30 @@
 <script src="resources/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function(){
-		
-		$("#login").on('click', function(){
-		var list=["aaa", "bbb", "ccc", "ddd"];
-		var user = $("#id").val();
-		var eee;
-		
-		for(var i = 0; i < list.length; i++){
-			if(user == list[i]){
-			alert("로그인 되었습니다"); 
-			return;
-			}
-			else{eee= "아이디 또는 비밀번호가 일치하지 않습니다."}
-		}
-		$('#eee').html(eee);
-	});
-		
-});
+	
+	$("#login").on('click', function(){ //로그인결과 받아오는 것
+		$.ajax({
+			url: '<%=request.getContextPath() %>/login',
+			data: {'id':$("#id").val(), 'password':$("#password").val()},
+			type : 'post', 
+			dataType: 'json',
+			success: function(a){ 
+				//alert(JSON.stringify(a));
+				if(a == 1){
+				alert("정상 로그인 되셨습니다")
+				location.replace('http://localhost:8080/gametrend/');
+				
+				}else{
+				$("#eee").html("아이디 또는 비밀번호가 일치하지 않습니다");						
+				}
+				
+			}//success end
+			
+		});//ajax end
+	
+	});//onend
+	
+}); //ready end 
 </script>
 
 <script type="text/javascript">
@@ -40,9 +47,11 @@ window.onload = function(){
 	document.getElementById('entry').onclick = function(){
 		window.open("join.jsp", 'joinpage', "width = 1000, height = 1000, top = 100, left = 100, resizable=yes, location = yes");
 		}
-	document.getElementById('aaa').onclick = function(){
+	// 비회원 로그인 주석처리
+	/* 	document.getElementById('aaa').onclick = function(){
 		window.open("login3.jsp", 'login3', "width = 600, height = 500, top = 100, left = 100, resizable=yes, location = yes");
-		}
+		} */
+	//아이디 또는 비밀번호가 일치하지 않습니다 빈칸 주석처리	
 	document.getElementById('id').onkeyup = function(){document.getElementById('eee').innerHTML = '';
 		
 	}
@@ -53,19 +62,20 @@ window.onload = function(){
 </head>
 <body>
 <div id="box">
-	<form action = aaa.jsp>
+	<form action = "">
 		<div id= 'line'>
 			<a href = "index.jsp"><img src = 'resources/images/logo.png'></img></a><br>
-			<input class = "form-control me-2" id = 'id' type= "text" placeholder= "아이디">
-			<input class = "form-control me-2" id = 'pw' type = 'password' name = 'password' placeholder = "비밀번호">
+			<input class = "form-control me-2" id = 'id' type= "text" name = "id" placeholder= "아이디">
+			<input class = "form-control me-2" id = 'password' type = 'password' name = 'password' placeholder = "비밀번호">
 			<input id="keep" type = 'checkbox' name = 'keep' value = '자동로그인'> 로그인 상태 유지 <br>
 			<div id = 'eee'></div><br>
 			<div><input class="btn btn-primary" id = 'login' type="button" name = 'button' value = '로그인'></div>
 			<div><input class = "btn btn-outline-primary" id = 'find' type = 'button' name = 'find' value = '아이디/비밀번호 찾기'></div>
 			<input class = "btn btn-outline-primary" id = 'entry' type = 'button' name = 'entry' value = '회원가입'>
-			<input class = "btn btn-outline-primary" id = 'aaa' type = 'button'	name = 'button' value = '비회원 로그인'>
+			<!-- <input class = "btn btn-outline-primary" id = 'aaa' type = 'button'	name = 'button' value = '비회원 로그인'> -->
 		</div>
 	</form>
 </div>
 </body>
 </html>
+

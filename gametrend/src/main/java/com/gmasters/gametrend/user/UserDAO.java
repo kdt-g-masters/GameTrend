@@ -9,6 +9,21 @@ public class UserDAO {
 
 	@Autowired
 	SqlSession session;
+
+	public UserDTO loginUser(UserDTO dto) {
+		System.out.println("==> Mybatis로 loginUser() 기능 처리");
+		return session.selectOne("loginUser", dto);
+	}
+
+	/*public UserDTO findId(UserDTO dto) {
+		System.out.println("==> Mybatis로 findId() 기능 처리");
+		return session.selectOne("findId", dto);
+	}*/
+
+	/* public UserDTO findPassword(UserDTO dto) {
+		System.out.println("==> Mybatis로 findPassword() 기능 처리");
+		return session.selectOne("UserDAO.findPassword", dto);
+	}*/
 	
 	// 아이디 중복확인
 	public String checkId(String id) {
