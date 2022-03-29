@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gmasters.gametrend.*" >
+ 	<select id="carousellist" resultType="carouseldto">
+		select * from gamedb.carousel
+	</select>
+	
+	<insert id="insertcarousel" parameterType="carouseldto" >
+		insert into gamedb.carousel values(#{carouselNo},#{image},#{title},#{subtitle})
+	</insert>
+
+	<update id="updatecarousel" parameterType="carouseldto" >
+		update gamedb.carousel set image=#{image}, title=#{title}, subtitle=#{subtitle} where carouselNo=#{carouselNo}
+	</update>
+	
+	<delete id="deletecarousel" parameterType="int">
+		delete from gamedb.carousel where carouselNo=#{no}
+	</delete>
+	
+</mapper>
