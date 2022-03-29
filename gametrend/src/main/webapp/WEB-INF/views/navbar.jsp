@@ -8,8 +8,8 @@
 <title>Game Trend</title>
 	<!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="resources/css/index.css"/>
-	<script src="resources/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="/gametrend/resources/css/index.css"/>
+	<script src="/gametrend/resources/jquery-3.6.0.min.js"></script>
 	<script>
 	$(document).ready(function(){
 		// Toggle the side navigation
@@ -25,6 +25,12 @@
 	            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
 	        });
 	    }
+	    $('#logoutBtn').on('click', function() {
+	    	<%
+				session.invalidate();
+			%>
+	    });	    	    
+	}
 	</script>
 	<style>
 		nav {
@@ -44,7 +50,7 @@
 	<nav class="navbar navbar-light bg-light fixed-top">
 	  <div class="container-fluid">
 		  <div class="d-flex justify-content-start">			
-		    <a class="navbar-brand " href="index.jsp">
+		    <a class="navbar-brand " href="index">
 		    	<img src="resources/images/logo_sm.png" width="10%">	    	
 		    	<b>Game Trend</b>
 		    </a>	  	
@@ -57,20 +63,33 @@
 				</svg>	        	
 	        </button>        
 	      </form>
+	      <c:if test="${ !empty sessionid }">
+	      	${ sessionid }님 안녕하세요 :)
+	      	<form class="d-flex justify-content-end">
+		    <a href="#" class="btn btn-primary me-2 mainColor" type="button" id="logoutBtn">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+				  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+				  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+				</svg>	    	
+		    	로그아웃
+		    </a>
+	      </c:if>
+	      <c:if test="${ empty sessionid }">
 		  <form class="d-flex justify-content-end">
-		    <a href="login.jsp" class="btn btn-primary me-2 mainColor" type="button" id="loginBtn">
+		    <a href="login" class="btn btn-primary me-2 mainColor" type="button" id="loginBtn">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16" style="display: inline">
 				  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
 				  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
 				</svg>		    	
 		    	로그인
 		    </a>
-		    <a href="join.jsp" class="btn btn-outline-primary me-2 mainColorOutline" type="button" id="joinBtn">
+		    <a href="join" class="btn btn-outline-primary me-2 mainColorOutline" type="button" id="joinBtn">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
 				  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
 				</svg>		    
 		    	회원가입
 		    </a>
+		    </c:if>
 	  		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 		      <span class="navbar-toggler-icon"></span>
 		    </button>		    		   		 
@@ -92,7 +111,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a id="wishlist" class="nav-link active" aria-current="page" href="wishlist.jsp">
+            <a id="wishlist" class="nav-link active" aria-current="page" href="wishlist?userId=${ sessionid }&page=1">
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-star" viewBox="0 0 16 16">
 				  <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.178.178 0 0 0 .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.178.178 0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.178.178 0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.178.178 0 0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.178.178 0 0 0 .134-.098L7.84 4.1z"/>
 				  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>

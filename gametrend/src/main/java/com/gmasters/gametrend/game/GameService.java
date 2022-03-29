@@ -1,5 +1,7 @@
 package com.gmasters.gametrend.game;
 
-public interface GameService {
+import java.util.List;
 
+public interface GameService {
+	public List<GameDTO> gamelist(int page);
 }
