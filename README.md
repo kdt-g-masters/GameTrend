@@ -1,13 +1,13 @@
 # <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Video%20Game.png" alt="Video Game" width="40" height="40" /> Game Trend
 > Game Trend는 국내(한국) 콘솔 게임 랭킹 사이트입니다.
 
-# 📌 주요 기능
+# <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="35" height="35" /> 주요 기능
 - 메인페이지 - 게임 리스트
 - 게임별 상세페이지
 - 회원 관리
 - 위시리스트 페이지
 
-# 📌 기술 스택
+# <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="35" height="35" /> 기술 스택
 
 ### Back-End
 
